@@ -34,10 +34,13 @@ class TestSxpbFiles(unittest.TestCase):
                 # 3. Parse sxpb from the string, using precise=True
                 obj2 = sxpb.loads(s1, precise=True)
 
-                # 4. Write the sxpb to another string
+                # 4. Ensure the parse-print-parse cycle preserves the data.
+                self.assertEqual(obj1, obj2, f"Semantic roundtrip failed for {sxpb_file}")
+
+                # 5. Write the sxpb to another string.
                 s2 = sxpb.dumps(obj2)
 
-                # 5. Compare the 2 written strings
+                # 6. Compare the 2 written strings.
                 self.assertEqual(s1, s2, f"Idempotency check failed for {sxpb_file}")
 
 

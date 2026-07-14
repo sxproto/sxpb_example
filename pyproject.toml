@@ -1,7 +1,3 @@
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
 [project]
 name = "sxpb_example"
 version = "0.0.0"
@@ -11,16 +7,24 @@ dependencies = [
 ]
 requires-python = ">=3.9"
 
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
 [dependency-groups]
 dev = [
     "pytest",
-    "sxpb @ git+https://github.com/sxproto/sxpb-py.git",
+    "sxpb @ git+https://github.com/sxproto/sxpb-py.git@02bf7b5d5ab5be6e9756e6c0ec3d463fca2c62dd",
 ]
 
 [tool.pytest.ini_options]
-addopts = "-v"
 pythonpath = ["test"]
 testpaths = ["test"]
 
 [tool.pdm.scripts]
-test = "pytest"
+test = "pytest -q"
+lint-sxpb = "sxpb-lint --ignore-file .gitignore"
+tidy-sxpb = "sxpb-tidy --ignore-file .gitignore"
+tidy = {composite = ["tidy-sxpb"]}
+lint = {composite = ["lint-sxpb"]}
+tidytest = {composite = ["tidy", "lint", "test"]}

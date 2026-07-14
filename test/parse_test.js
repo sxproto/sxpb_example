@@ -1,3 +1,4 @@
+import assert from "assert";
 import fs from "fs";
 import path from "path";
 import SxPB from "@sxproto/sxpb";
@@ -53,10 +54,13 @@ sxpbFiles.forEach((file) => {
     // 3. Parse sxpb from the string, using precise=true
     const obj2 = SxPB.parse(s1, { precise: true });
 
-    // 4. Write the sxpb to another string
+    // 4. Ensure the parse-print-parse cycle preserves the data.
+    assert.deepStrictEqual(obj2, obj1);
+
+    // 5. Write the sxpb to another string
     const s2 = SxPB.stringify(obj2);
 
-    // 5. Compare the 2 written strings
+    // 6. Compare the 2 written strings
     if (s1 !== s2) {
       throw new Error(
         `Idempotency check failed. Expected length ${s1.length}, got ${s2.length}`,
