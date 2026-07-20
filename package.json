@@ -4,7 +4,7 @@
   "description": "Tests for sxpb examples",
   "type": "module",
   "dependencies": {
-    "@sxproto/sxpb": "github:sxproto/sxpb-js"
+    "@sxproto/sxpb": "github:sxproto/sxpb-js#45e5fc037c1334450c0d6e47ae8e47ff6d18399c"
   },
   "scripts": {
     "test": "node test/parse_test.js"

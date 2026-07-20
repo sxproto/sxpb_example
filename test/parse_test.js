@@ -11,6 +11,7 @@ const dirsFile = path.join(__dirname, "dirs.sxpb");
 const dirsToScan = SxPB.parse(fs.readFileSync(dirsFile, "utf8"));
 
 let sxpbFiles = [];
+const corpusCounts = { golden: 0, idempotent: 0 };
 
 function walk(dir) {
   if (!fs.existsSync(dir)) return;
@@ -23,6 +24,10 @@ function walk(dir) {
     } else {
       if (file.endsWith(".sxpb")) {
         sxpbFiles.push(file);
+        const corpusName = path.basename(path.dirname(file));
+        if (Object.hasOwn(corpusCounts, corpusName)) {
+          corpusCounts[corpusName] += 1;
+        }
       }
     }
   });
@@ -39,8 +44,18 @@ if (sxpbFiles.length === 0) {
   console.error("No .sxpb files found");
   process.exit(1);
 }
+for (const [corpusName, count] of Object.entries(corpusCounts)) {
+  if (count === 0) {
+    console.error(`No ${corpusName} corpus files found`);
+    process.exit(1);
+  }
+}
 
 let failed = false;
+
+function withoutTerminalLf(text) {
+  return text.endsWith("\n") ? text.slice(0, -1) : text;
+}
 
 sxpbFiles.forEach((file) => {
   try {
@@ -51,21 +66,15 @@ sxpbFiles.forEach((file) => {
     // 2. Write the sxpb to a string
     const s1 = SxPB.stringify(obj1);
 
+    if (path.basename(path.dirname(file)) === "idempotent") {
+      assert.strictEqual(withoutTerminalLf(s1), withoutTerminalLf(content));
+    }
+
     // 3. Parse sxpb from the string, using precise=true
     const obj2 = SxPB.parse(s1, { precise: true });
 
     // 4. Ensure the parse-print-parse cycle preserves the data.
     assert.deepStrictEqual(obj2, obj1);
-
-    // 5. Write the sxpb to another string
-    const s2 = SxPB.stringify(obj2);
-
-    // 6. Compare the 2 written strings
-    if (s1 !== s2) {
-      throw new Error(
-        `Idempotency check failed. Expected length ${s1.length}, got ${s2.length}`,
-      );
-    }
 
     console.log(`Validated ${file}`);
   } catch (error) {

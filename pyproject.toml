@@ -14,15 +14,19 @@ build-backend = "pdm.backend"
 [dependency-groups]
 dev = [
     "pytest",
-    "sxpb @ git+https://github.com/sxproto/sxpb-py.git@02bf7b5d5ab5be6e9756e6c0ec3d463fca2c62dd",
+    "sxpb @ git+https://github.com/sxproto/sxpb-py.git@539ea1b3fde70abe6c1c2f5188290e51a577d204",
 ]
 
 [tool.pytest.ini_options]
+addopts = [
+    "-q",
+    "--import-mode=importlib",
+]
 pythonpath = ["test"]
 testpaths = ["test"]
 
 [tool.pdm.scripts]
-test = "pytest -q"
+test = "pytest"
 lint-sxpb = "sxpb-lint --ignore-file .gitignore"
 tidy-sxpb = "sxpb-tidy --ignore-file .gitignore"
 tidy = {composite = ["tidy-sxpb"]}

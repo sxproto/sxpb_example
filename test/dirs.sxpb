@@ -1,5 +1,7 @@
 (())
 game
+golden
+idempotent
 json
 misc
 svg

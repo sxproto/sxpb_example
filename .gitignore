@@ -3,6 +3,7 @@
 !/.github/
 
 /bld/
+/bld-local/
 /build/
 /coverage/
 /node_modules/
