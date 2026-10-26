@@ -11,3 +11,14 @@ The corpus separates semantic roundtrip coverage from canonical printer coverage
 Cases belong here only after their behavior is implementation-neutral. Keep
 implementation-defined or deliberately unsupported syntax in the individual
 implementation repositories.
+
+Rust tests use the commit-pinned dependency in `Cargo.toml` and require Rust 1.85+:
+
+```sh
+cargo fmt --all --check
+cargo clippy --all-targets -- -D warnings
+cargo test
+```
+
+They discover the same directories listed in `test/dirs.sxpb`, compare precise
+values after roundtrip, and enforce the exact `idempotent/` expectations above.

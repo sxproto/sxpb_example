@@ -1,0 +1,15 @@
+[package]
+name = "sxpb-example"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+license = "0BSD"
+autotests = false
+
+[dev-dependencies]
+sxpb = { git = "https://github.com/sxproto/sxpb-rs", rev = "3d362ed3518b17e29ed9d67e80c6f23d6384dfc4" }
+
+[[test]]
+name = "parse_test"
+path = "test/parse_test.rs"
