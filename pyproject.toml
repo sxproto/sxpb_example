@@ -14,7 +14,7 @@ build-backend = "pdm.backend"
 [dependency-groups]
 dev = [
     "pytest",
-    "sxpb @ git+https://github.com/sxproto/sxpb-py.git@539ea1b3fde70abe6c1c2f5188290e51a577d204",
+    "sxpb @ git+https://github.com/sxproto/sxpb-py.git@c13d27a8fdc582d5d4175aad43f8781c84f2d883",
 ]
 
 [tool.pytest.ini_options]

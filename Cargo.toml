@@ -8,7 +8,7 @@ license = "0BSD"
 autotests = false
 
 [dev-dependencies]
-sxpb = { git = "https://github.com/sxproto/sxpb-rs", rev = "3d362ed3518b17e29ed9d67e80c6f23d6384dfc4" }
+sxpb = { git = "https://github.com/sxproto/sxpb-rs", rev = "9fe5e2c3c50ddf4ba9402b73624cab133dd9018c" }
 
 [[test]]
 name = "parse_test"
